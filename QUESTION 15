@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+// Base class
+class Shape {
+public:
+    void print() {
+        cout << "This is a shape" << endl;
+    }
+};
+
+// Derived class from Shape
+class Polygon : public Shape {
+public:
+    void print() {
+        cout << "Polygon is a shape" << endl;
+    }
+};
+
+// Derived class from Polygon
+class Rectangle : public Polygon {
+public:
+    void print() {
+        cout << "Rectangle is a polygon" << endl;
+    }
+};
+
+// Derived class from Polygon
+class Triangle : public Polygon {
+public:
+    void print() {
+        cout << "Triangle is a polygon" << endl;
+    }
+};
+
+// Derived class from Rectangle
+class Square : public Rectangle {
+public:
+    void print() {
+        cout << "Square is a rectangle" << endl;
+    }
+};
+
+// Main function
+int main() {
+    Shape shapeObj;
+    Polygon polygonObj;
+    Rectangle rectangleObj;
+    Triangle triangleObj;
+    Square squareObj;
+
+    cout << "\nCalling print() from each object:\n" << endl;
+
+    shapeObj.print();        // This is a shape
+    polygonObj.print();      // Polygon is a shape
+    rectangleObj.print();    // Rectangle is a polygon
+    triangleObj.print();     // Triangle is a polygon
+    squareObj.print();       // Square is a rectangle
+
+    return 0;
+}
