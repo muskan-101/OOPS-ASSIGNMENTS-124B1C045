@@ -1,0 +1,171 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Base class Marks
+class Marks {
+protected:
+    static int rollNumberCounter;  // Static variable to generate roll numbers automatically
+    int rollNumber;  // Roll number of the student
+    string name;     // Name of the student
+    double totalMarks;  // Total marks for the student in all subjects
+
+public:
+    // Constructor to initialize roll number and name
+    Marks(string studentName) {
+        rollNumber = ++rollNumberCounter;  // Automatically generate roll number
+        name = studentName;
+        totalMarks = 0;
+    }
+
+    // Getter for roll number
+    int getRollNumber() const {
+        return rollNumber;
+    }
+
+    // Getter for name
+    string getName() const {
+        return name;
+    }
+
+    // Function to get total marks (to be overridden in derived classes)
+    virtual void calculateTotalMarks() = 0;
+
+    // Getter for total marks
+    double getTotalMarks() const {
+        return totalMarks;
+    }
+};
+
+// Initialize static variable for roll number counter
+int Marks::rollNumberCounter = 0;
+
+// Derived class Physics
+class Physics : public Marks {
+private:
+    double physicsMarks;  // Marks in Physics
+
+public:
+    Physics(string studentName, double marks) : Marks(studentName), physicsMarks(marks) {
+        calculateTotalMarks();  // Calculate total marks when object is created
+    }
+
+    // Override the function to calculate total marks
+    void calculateTotalMarks() override {
+        totalMarks += physicsMarks;
+    }
+
+    double getPhysicsMarks() const {
+        return physicsMarks;
+    }
+};
+
+// Derived class Chemistry
+class Chemistry : public Marks {
+private:
+    double chemistryMarks;  // Marks in Chemistry
+
+public:
+    Chemistry(string studentName, double marks) : Marks(studentName), chemistryMarks(marks) {
+        calculateTotalMarks();  // Calculate total marks when object is created
+    }
+
+    // Override the function to calculate total marks
+    void calculateTotalMarks() override {
+        totalMarks += chemistryMarks;
+    }
+
+    double getChemistryMarks() const {
+        return chemistryMarks;
+    }
+};
+
+// Derived class Mathematics
+class Mathematics : public Marks {
+private:
+    double mathematicsMarks;  // Marks in Mathematics
+
+public:
+    Mathematics(string studentName, double marks) : Marks(studentName), mathematicsMarks(marks) {
+        calculateTotalMarks();  // Calculate total marks when object is created
+    }
+
+    // Override the function to calculate total marks
+    void calculateTotalMarks() override {
+        totalMarks += mathematicsMarks;
+    }
+
+    double getMathematicsMarks() const {
+        return mathematicsMarks;
+    }
+};
+
+// Function to calculate the average marks of the class
+double calculateClassAverage(const vector<Marks*>& students) {
+    double totalClassMarks = 0;
+    for (const auto& student : students) {
+        totalClassMarks += student->getTotalMarks();
+    }
+    return totalClassMarks / students.size();
+}
+
+int main() {
+    vector<Marks*> students;  // Vector to store the student objects
+    int numberOfStudents;
+
+    // Asking user to input the number of students
+    cout << "Enter the number of students in the class: ";
+    cin >> numberOfStudents;
+    cin.ignore();  // To clear the newline character left by cin
+
+    // Loop to input details of each student
+    for (int i = 0; i < numberOfStudents; ++i) {
+        string studentName;
+        double physicsMarks, chemistryMarks, mathematicsMarks;
+
+        // Input student name
+        cout << "\nEnter name of student " << i + 1 << ": ";
+        getline(cin, studentName);
+
+        // Input marks for each subject
+        cout << "Enter Physics marks: ";
+        cin >> physicsMarks;
+
+        cout << "Enter Chemistry marks: ";
+        cin >> chemistryMarks;
+
+        cout << "Enter Mathematics marks: ";
+        cin >> mathematicsMarks;
+        cin.ignore();  // To clear the newline character
+
+        // Create objects for each subject and add to the students list
+        Physics* physics = new Physics(studentName, physicsMarks);
+        Chemistry* chemistry = new Chemistry(studentName, chemistryMarks);
+        Mathematics* mathematics = new Mathematics(studentName, mathematicsMarks);
+
+        // Store the student objects in the students vector
+        students.push_back(physics);
+        students.push_back(chemistry);
+        students.push_back(mathematics);
+    }
+
+    // Print student details and total marks
+    cout << "\nStudent Details and Marks:\n";
+    for (const auto& student : students) {
+        cout << "\nRoll Number: " << student->getRollNumber() << endl;
+        cout << "Name: " << student->getName() << endl;
+        cout << "Total Marks: " << student->getTotalMarks() << endl;
+    }
+
+    // Calculate and display class average
+    double classAverage = calculateClassAverage(students);
+    cout << "\nClass Average Marks: " << classAverage << endl;
+
+    // Cleanup dynamic memory
+    for (auto& student : students) {
+        delete student;
+    }
+
+    return 0;
+}
