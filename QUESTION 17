@@ -1,0 +1,137 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Base Class: RBI
+class RBI {
+protected:
+    float minInterestRate = 4.0;
+    float minBalance = 1000.0;
+    float maxWithdrawal = 25000.0;
+
+public:
+    virtual void bankDetails() = 0;
+
+    float getMinInterestRate() { return minInterestRate; }
+    float getMinBalance() { return minBalance; }
+    float getMaxWithdrawal() { return maxWithdrawal; }
+};
+
+// Customer Class
+class Customer {
+public:
+    string name;
+    int age;
+    string address;
+
+    Customer(string n, int a, string addr) {
+        name = n;
+        age = a;
+        address = addr;
+    }
+
+    void showCustomerDetails() {
+        cout << "Customer Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "Address: " << address << endl;
+    }
+};
+
+// Account Class
+class Account {
+private:
+    float balance;
+
+public:
+    Account() {
+        balance = 0;
+    }
+
+    void deposit(float amount) {
+        if (amount > 0) {
+            balance += amount;
+            cout << "Deposited ₹" << amount << ". Current Balance: ₹" << balance << endl;
+        } else {
+            cout << "Invalid deposit amount!" << endl;
+        }
+    }
+
+    void withdraw(float amount, float maxLimit, float minBalance) {
+        if (amount > maxLimit) {
+            cout << "Withdrawal exceeds max transaction limit!" << endl;
+        } else if ((balance - amount) < minBalance) {
+            cout << "Cannot withdraw. Balance would fall below minimum allowed!" << endl;
+        } else {
+            balance -= amount;
+            cout << "Withdrew ₹" << amount << ". Remaining Balance: ₹" << balance << endl;
+        }
+    }
+
+    float getBalance() {
+        return balance;
+    }
+};
+
+// Derived Bank Class: SBI
+class SBI : public RBI {
+public:
+    void bankDetails() override {
+        cout << "\n--- Welcome to SBI ---" << endl;
+        cout << "Interest Rate: 4.5%" << endl;
+        cout << "Min Balance: ₹" << minBalance << endl;
+        cout << "Max Withdrawal: ₹" << maxWithdrawal << endl;
+    }
+};
+
+// Derived Bank Class: ICICI
+class ICICI : public RBI {
+public:
+    void bankDetails() override {
+        cout << "\n--- Welcome to ICICI ---" << endl;
+        cout << "Interest Rate: 5.0%" << endl;
+        cout << "Min Balance: ₹" << minBalance + 1000 << endl;
+        cout << "Max Withdrawal: ₹" << maxWithdrawal + 10000 << endl;
+    }
+};
+
+// Derived Bank Class: PNB
+class PNB : public RBI {
+public:
+    void bankDetails() override {
+        cout << "\n--- Welcome to PNB ---" << endl;
+        cout << "Interest Rate: 4.2%" << endl;
+        cout << "Min Balance: ₹" << minBalance << endl;
+        cout << "Max Withdrawal: ₹" << maxWithdrawal << endl;
+    }
+};
+
+// Main Function
+int main() {
+    // Create bank objects
+    SBI sbi;
+    ICICI icici;
+    PNB pnb;
+
+    // Create a customer
+    Customer cust1("Amit Sharma", 30, "Delhi");
+
+    // Create an account
+    Account acc1;
+
+    // Choose a bank (SBI in this case)
+    RBI* bank = &sbi;
+
+    // Show customer and bank info
+    cout << "\n--- Customer Info ---" << endl;
+    cust1.showCustomerDetails();
+
+    bank->bankDetails();
+
+    // Perform transactions
+    acc1.deposit(5000); // deposit
+    acc1.withdraw(2000, bank->getMaxWithdrawal(), bank->getMinBalance()); // withdraw
+
+    acc1.withdraw(4000, bank->getMaxWithdrawal(), bank->getMinBalance()); // invalid
+
+    return 0;
+}
