@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+
+// Base class
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+    void get_person_info() {
+        cout << "Enter name: ";
+        getline(cin, name);
+        cout << "Enter age: ";
+        cin >> age;
+        cin.ignore(); // To consume the newline character
+    }
+
+    void display_person_info() {
+        cout << "Name: " << name << "\nAge: " << age << endl;
+    }
+};
+
+// Derived class - Account
+class Account : virtual public Person {
+protected:
+    float pay;
+
+public:
+    void get_account_info() {
+        cout << "Enter pay: ";
+        cin >> pay;
+        cin.ignore();
+    }
+
+    void display_account_info() {
+        cout << "Pay: " << pay << endl;
+    }
+};
+
+// Derived class - Admin
+class Admin : virtual public Person {
+protected:
+    int experience;
+
+public:
+    void get_admin_info() {
+        cout << "Enter years of experience: ";
+        cin >> experience;
+        cin.ignore();
+    }
+
+    void display_admin_info() {
+        cout << "Experience: " << experience << " years" << endl;
+    }
+};
+
+// Derived class - Master (inherits from both Account and Admin)
+class Master : public Account, public Admin {
+public:
+    void create() {
+        get_person_info();
+        get_account_info();
+        get_admin_info();
+    }
+
+    void update() {
+        cout << "\nUpdate info:\n";
+        create();
+    }
+
+    void display() {
+        cout << "\n--- Master Record ---" << endl;
+        display_person_info();
+        display_account_info();
+        display_admin_info();
+    }
+};
+int main() {
+    Master m;
+
+    cout << "--- Create Master Record ---" << endl;
+    m.create();
+
+    cout << "\n--- Display Master Record ---" << endl;
+    m.display();
+
+    cout << "\n--- Update Master Record ---" << endl;
+    m.update();
+
+    cout << "\n--- Updated Master Record ---" << endl;
+    m.display();
+
+    return 0;
+}
