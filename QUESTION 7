@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+class SimpleCircle {
+private:
+    int itsRadius;
+
+public:
+    // Default constructor
+    SimpleCircle() : itsRadius(5) {}
+
+    // Destructor
+    ~SimpleCircle() {}
+
+    // Parameterized constructor
+    SimpleCircle(int radius) : itsRadius(radius) {}
+
+    // Copy constructor
+    SimpleCircle(const SimpleCircle& other) {
+        itsRadius = other.itsRadius;
+    }
+
+    // Assignment operator
+    SimpleCircle& operator=(const SimpleCircle& other) {
+        if (this != &other) {
+            itsRadius = other.itsRadius;
+        }
+        return *this;
+    }
+
+    // Accessors
+    int GetRadius() const {
+        return itsRadius;
+    }
+
+    void SetRadius(int radius) {
+        itsRadius = radius;
+    }
+
+    // Prefix increment
+    SimpleCircle& operator++() {
+        ++itsRadius;
+        return *this;
+    }
+
+    // Postfix increment
+    SimpleCircle operator++(int) {
+        SimpleCircle temp = *this;
+        itsRadius++;
+        return temp;
+    }
+};
+
+int main() {
+    SimpleCircle circle1;         // Default constructor (radius = 5)
+    SimpleCircle circle2(9);      // Parameterized constructor (radius = 9)
+
+    ++circle1;                    // Prefix increment
+    circle2++;                    // Postfix increment
+
+    cout << "Circle1 radius after increment: " << circle1.GetRadius() << endl;
+    cout << "Circle2 radius after increment: " << circle2.GetRadius() << endl;
+
+    circle1 = circle2;            // Assignment operator
+
+    cout << "Circle1 radius after assignment: " << circle1.GetRadius() << endl;
+
+    return 0;
+}
