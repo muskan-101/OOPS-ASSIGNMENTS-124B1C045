@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+class AddAmount {
+private:
+    int amount;
+
+public:
+    // Constructor 1: No parameter
+    AddAmount() {
+        amount = 50;  // Initial amount, no addition
+    }
+
+    // Constructor 2: With parameter to add amount
+    AddAmount(int add) {
+        amount = 50 + add;
+    }
+
+    // Function to display final amount
+    void displayAmount() {
+        cout << "Final amount in the Piggie Bank: $" << amount << endl;
+    }
+};
+
+// Main Function
+int main() {
+    AddAmount obj1;          // No amount added
+    AddAmount obj2(100);     // $100 added
+
+    cout << "Using default constructor (no addition):" << endl;
+    obj1.displayAmount();
+
+    cout << "Using parameterized constructor (adding $100):" << endl;
+    obj2.displayAmount();
+
+    return 0;
+}
