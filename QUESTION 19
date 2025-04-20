@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+class Rectangle {
+private:
+    int length;
+    int breadth;
+
+public:
+    // Constructor 1: No parameters
+    Rectangle() {
+        length = 0;
+        breadth = 0;
+    }
+
+    // Constructor 2: One parameter
+    Rectangle(int side) {
+        length = side;
+        breadth = side;
+    }
+
+    // Constructor 3: Two parameters
+    Rectangle(int l, int b) {
+        length = l;
+        breadth = b;
+    }
+
+    // Function to calculate area
+    int area() {
+        return length * breadth;
+    }
+
+    // Optional: Show dimensions
+    void displayDimensions() {
+        cout << "Length: " << length << ", Breadth: " << breadth << endl;
+    }
+};
+
+// Main Function
+int main() {
+    Rectangle r1;            // No parameters
+    Rectangle r2(5);         // One parameter
+    Rectangle r3(4, 6);      // Two parameters
+
+    cout << "Area of Rectangle r1: " << r1.area() << endl;
+    cout << "Area of Rectangle r2: " << r2.area() << endl;
+    cout << "Area of Rectangle r3: " << r3.area() << endl;
+
+    return 0;
+}
