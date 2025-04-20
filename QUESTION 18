@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Student {
+private:
+    string name;
+
+public:
+    // Default constructor
+    Student() {
+        name = "Unknown";
+    }
+
+    // Parameterized constructor
+    Student(string studentName) {
+        name = studentName;
+    }
+
+    // Display function
+    void printName() {
+        cout << "Student Name: " << name << endl;
+    }
+};
+
+// Main Function
+int main() {
+    Student s1;                  // Will use default constructor
+    Student s2("Priya Sharma"); // Will use parameterized constructor
+
+    s1.printName(); // Output: Unknown
+    s2.printName(); // Output: Priya Sharma
+
+    return 0;
+}
