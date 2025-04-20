@@ -1,0 +1,111 @@
+#include <iostream>
+using namespace std;
+
+// Base class
+class Employee {
+protected:
+    string name;
+    int emp_id;
+    string address;
+
+public:
+    void get_data() {
+        cout << "Enter name: ";
+        getline(cin, name);
+        cout << "Enter employee ID: ";
+        cin >> emp_id;
+        cin.ignore();
+        cout << "Enter address: ";
+        getline(cin, address);
+    }
+
+    void display_data() {
+        cout << "\nName: " << name;
+        cout << "\nEmployee ID: " << emp_id;
+        cout << "\nAddress: " << address;
+    }
+};
+
+// Derived class - Teaching staff
+class Teaching : public Employee {
+protected:
+    string subject;
+    string department;
+
+public:
+    void get_data() {
+        Employee::get_data();
+        cout << "Enter subject: ";
+        getline(cin, subject);
+        cout << "Enter department: ";
+        getline(cin, department);
+    }
+
+    void display_data() {
+        Employee::display_data();
+        cout << "\nSubject: " << subject;
+        cout << "\nDepartment: " << department;
+    }
+};
+
+// Derived class - Non-teaching staff
+class NonTeaching : public Employee {
+protected:
+    string section;
+
+public:
+    void get_data() {
+        Employee::get_data();
+        cout << "Enter section (e.g., Lab Assistant, Clerk): ";
+        getline(cin, section);
+    }
+
+    void display_data() {
+        Employee::display_data();
+        cout << "\nSection: " << section;
+    }
+};
+
+// Derived class - Admin staff
+class Admin : public Employee {
+protected:
+    string position;
+
+public:
+    void get_data() {
+        Employee::get_data();
+        cout << "Enter position (e.g., Manager, Assistant): ";
+        getline(cin, position);
+    }
+
+    void display_data() {
+        Employee::display_data();
+        cout << "\nPosition: " << position;
+    }
+};
+int main() {
+    Teaching t1;
+    NonTeaching nt1;
+    Admin a1;
+
+    cout << "\n--- Enter Teaching Staff Details ---\n";
+    t1.get_data();
+
+    cout << "\n--- Enter Non-Teaching Staff Details ---\n";
+    nt1.get_data();
+
+    cout << "\n--- Enter Admin Staff Details ---\n";
+    a1.get_data();
+
+    cout << "\n--- Displaying Details ---";
+    cout << "\n\nTeaching Staff:";
+    t1.display_data();
+
+    cout << "\n\nNon-Teaching Staff:";
+    nt1.display_data();
+
+    cout << "\n\nAdmin Staff:";
+    a1.display_data();
+
+    return 0;
+}
