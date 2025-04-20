@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+
+class Account {
+protected:
+    string name;
+    int acc_no;
+    string acc_type;
+    float balance;
+
+public:
+    // Constructor for base class
+    Account(string n, int no, string type, float bal) {
+        name = n;
+        acc_no = no;
+        acc_type = type;
+        balance = bal;
+    }
+
+    void deposit(float amount) {
+        balance += amount;
+    }
+
+    void display_balance() {
+        cout << "\nName: " << name;
+        cout << "\nAccount No: " << acc_no;
+        cout << "\nType: " << acc_type;
+        cout << "\nBalance: " << balance << endl;
+    }
+
+    float get_balance() {
+        return balance;
+    }
+
+    void set_balance(float bal) {
+        balance = bal;
+    }
+};
+
+class Sav_acct : public Account {
+public:
+    // Constructor for derived class
+    Sav_acct(string n, int no, float bal) : Account(n, no, "Savings", bal) {}
+
+    void compute_interest(float rate, int time) {
+        float interest = balance * rate * time / 100;
+        balance += interest;
+    }
+
+    void withdraw(float amount) {
+        if (amount <= balance) {
+            balance -= amount;
+        } else {
+            cout << "Not enough balance." << endl;
+        }
+    }
+};
+
+class Cur_acct : public Account {
+public:
+    // Constructor for derived class
+    Cur_acct(string n, int no, float bal) : Account(n, no, "Current", bal) {}
+
+    void withdraw(float amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            check_min_balance();
+        } else {
+            cout << "Not enough balance." << endl;
+        }
+    }
+
+    void check_min_balance() {
+        if (balance < 500) {
+            cout << "Below minimum balance. Service charge of 50 applied." << endl;
+            balance -= 50;
+        }
+    }
+};
+int main() {
+    // Create savings and current account using constructors
+    Sav_acct s("Alice", 1001, 1000);
+    Cur_acct c("Bob", 1002, 600);
+
+    // Savings account actions
+    s.deposit(200);
+    s.compute_interest(5, 2);  // 5% for 2 years
+    s.withdraw(300);
+    s.display_balance();
+
+    // Current account actions
+    c.deposit(100);
+    c.withdraw(300);  // Will fall below minimum
+    c.display_balance();
+
+    return 0;
+}
