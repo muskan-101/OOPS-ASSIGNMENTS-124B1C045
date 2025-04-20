@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+class Employee {
+private:
+    int age;
+    int yearsOfService;
+    double salary;
+
+public:
+    // Constructor to initialize data members
+    Employee(int age, int yearsOfService, double salary) {
+        this->age = age;
+        this->yearsOfService = yearsOfService;
+        this->salary = salary;
+    }
+
+    // Accessor methods (Getters and Setters)
+    int getAge() const {
+        return age;
+    }
+
+    void setAge(int age) {
+        this->age = age;
+    }
+
+    int getYearsOfService() const {
+        return yearsOfService;
+    }
+
+    void setYearsOfService(int yearsOfService) {
+        this->yearsOfService = yearsOfService;
+    }
+
+    double getSalary() const {
+        return salary;
+    }
+
+    void setSalary(double salary) {
+        this->salary = salary;
+    }
+
+    void printDetails() const {
+        cout << "Age: " << age << endl;
+        cout << "Years of Service: " << yearsOfService << endl;
+        cout << "Salary: $" << salary << endl;
+    }
+};
+
+int main() {
+    Employee employee1(30, 5, 50000);
+    Employee employee2(40, 10, 75000);
+
+    cout << "Employee 1 details:" << endl;
+    employee1.printDetails();
+
+    cout << "\nEmployee 2 details:" << endl;
+    employee2.printDetails();
+
+    return 0;
+}
